@@ -1,3 +1,5 @@
-torch
-zetascale
-swarms
+open-interpreter
+multion
+dotenv
+loguru
+
