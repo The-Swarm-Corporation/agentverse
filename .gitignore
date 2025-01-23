@@ -8,12 +8,14 @@ __pycache__/
 .vscode/
 .vscode
 
+experiments/
 # Distribution / packaging
 .Python
 build/
 develop-eggs/
 dist/
 downloads/
+agent_workspace/
 eggs/
 .eggs/
 lib/

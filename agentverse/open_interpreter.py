@@ -1,7 +1,8 @@
+import json
 from typing import Generator, List, Union
 from interpreter import interpreter
 from loguru import logger
-from agentverse.formatter import ConversationParser
+from agentverse.utils import log_agent_data
 
 # Configure loguru logger
 logger.add("app.log", rotation="500 MB")
@@ -26,7 +27,7 @@ class OpenInterpreterAgent:
         self,
         name: str = "interpreter-agent-01",
         description: str = "An interpreter for the open-interpreter package",
-        model: str = "gpt-3.5-turbo",
+        model: str = "gpt-4o-mini",
         auto_install: bool = True,
         auto_run: bool = True,
         system_prompt: str = "",
@@ -54,6 +55,12 @@ class OpenInterpreterAgent:
         logger.info(
             f"OpenInterpreterAgent initialized with model: {model}"
         )
+
+        self.interpreter.loop = True
+        self.interpreter.model = model
+        self.interpreter.safe_mode = "auto"
+
+        log_agent_data(self.to_dict())
 
     def __call__(self, task: str, **kwargs) -> Union[List, Generator]:
         """
@@ -101,9 +108,13 @@ class OpenInterpreterAgent:
                 output = str(output)
             else:
                 output = str(output)
-            return ConversationParser.extract_conversation(output)
+            log_agent_data(self.to_dict())
+            # log_agent_data(self.interpreter.messages.__dict__)
+            return output
         except Exception as e:
             logger.error(f"Error executing task: {str(e)}")
+            log_agent_data(self.to_dict())
+            # log_agent_data(self.interpreter.messages.__dict__)
             raise
 
     def reset(self):
@@ -159,3 +170,33 @@ class OpenInterpreterAgent:
         if self.interpreter:
             self.interpreter.system_message = message
             logger.info("System message updated")
+
+    def to_dict(self):
+        """
+        Convert agent attributes to a serializable dictionary.
+        Automatically filters out non-serializable objects.
+        """
+
+        def is_json_serializable(obj):
+            try:
+                json.dumps(obj)
+                return True
+            except (TypeError, OverflowError):
+                return False
+
+        return {
+            key: value
+            for key, value in self.__dict__.items()
+            if is_json_serializable(value)
+        }
+
+    def to_json(self):
+        return json.dumps(self.to_dict())
+
+    def save(self, filename: str):
+        with open(filename, "w") as f:
+            f.write(self.to_json())
+
+    def load(self, filename: str):
+        with open(filename, "r") as f:
+            self.__dict__ = json.load(f)

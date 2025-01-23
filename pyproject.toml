@@ -4,14 +4,14 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "agentverse"
-version = "0.0.2"
+version = "0.0.3"
 description = "AgentVerse - A framework for building and evaluating agents"
 license = "MIT"
 authors = ["Kye Gomez <kye@apac.ai>"]
-homepage = "https://github.com/kyegomez/agentverse"
-documentation = "https://github.com/kyegomez/agentverse"  # Add this if you have documentation.
+homepage = "https://github.com/The-Swarm-Corporation/agentverse"
+documentation = "https://github.com/The-Swarm-Corporation/agentverse"  # Add this if you have documentation.
 readme = "README.md"  # Assuming you have a README.md
-repository = "https://github.com/kyegomez/agentverse"
+repository = "https://github.com/The-Swarm-Corporation/agentverse"
 keywords = ["artificial intelligence", "deep learning", "optimizers", "Prompt Engineering"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -27,7 +27,6 @@ swarms = "*"
 loguru = "*"
 open-interpreter = "*"
 multion = "*"
-python-dotenv = "*"
 
 
 [tool.poetry.group.lint.dependencies]

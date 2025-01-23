@@ -8,7 +8,6 @@ from loguru import logger
 from multion.client import MultiOn
 
 
-
 class SessionStatus(str, Enum):
     """Enum for session status values"""
 
@@ -356,7 +355,9 @@ if __name__ == "__main__":
     api_key = os.getenv("MULTION_API_KEY")
 
     if not api_key:
-        raise ValueError("MULTION_API_KEY not found in environment variables")
+        raise ValueError(
+            "MULTION_API_KEY not found in environment variables"
+        )
 
     agent = MultiOnAgent(api_key=api_key)
     retriever = MultiOnRetrieverAgent(api_key=api_key)

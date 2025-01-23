@@ -1,4 +1,10 @@
-from agentverse.main import OpenInterpreterAgent
-from agentverse.multion_agent import MultiOnAgent, MultiOnRetrieverAgent
+from dotenv import load_dotenv
 
-__all__ = ["OpenInterpreterAgent", "MultiOnAgent", "MultiOnRetrieverAgent"]
+load_dotenv()
+
+from agentverse.open_interpreter import OpenInterpreterAgent
+
+
+__all__ = [
+    "OpenInterpreterAgent",
+]
